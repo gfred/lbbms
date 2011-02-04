@@ -1,6 +1,10 @@
 package de.gfred.lbbms.mobile;
 
+import java.util.List;
+
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +27,9 @@ import de.gfred.lbbms.mobile.util.Values;
  * @date 2011.02.03
  */
 public class LocationBasedMessaging extends Activity {
+    private static final String TAG = "de.gfred.lbbms.mobile.LocationBasedMessaging";
+    private static final boolean DEBUG = false;
+
     private ILocationService locationService;
     private Intent locationServiceIntent;
 
@@ -34,7 +41,7 @@ public class LocationBasedMessaging extends Activity {
     private String email;
     private String password;
 
-    private boolean bind = false;
+    private boolean isServiceBind = false;
     private boolean loginDataSet = false;
 
     private ServiceConnection locationServiceConnection = new ServiceConnection() {
@@ -79,6 +86,8 @@ public class LocationBasedMessaging extends Activity {
             passwordText.setVisibility(View.GONE);
             saveButton.setText("Edit Login");
         }
+
+        isServiceRunning();
     }
 
     public void onClickSaveLogin(View view) {
@@ -109,21 +118,47 @@ public class LocationBasedMessaging extends Activity {
             Toast.makeText(this, "Set login data!", Toast.LENGTH_LONG);
         } else {
             getApplicationContext().startService(locationServiceIntent);
+
             bindService(locationServiceIntent, locationServiceConnection, Context.BIND_AUTO_CREATE);
-            bind = true;
+            isServiceBind = true;
         }
     }
 
     public void onClickServiceStop(View view) {
-        if (bind) {
+        if (isServiceRunning()) {
             getApplicationContext().stopService(locationServiceIntent);
-            unbindService(locationServiceConnection);
+
+            if (isServiceBind) {
+                unbindService(locationServiceConnection);
+                isServiceBind = false;
+            }
+
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(locationServiceConnection);
+        if (isServiceRunning()) {
+            if (isServiceBind) {
+                unbindService(locationServiceConnection);
+                isServiceBind = false;
+            }
+        }
+    }
+
+    private boolean isServiceRunning() {
+        final ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        final List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+        for (int i = 0; i < services.size(); i++) {
+            if ("de.gfred.lbbms.mobile".equals(services.get(i).service.getPackageName())) {
+
+                if ("de.gfred.lbbms.mobile.services.LocationService".equals(services.get(i).service.getClassName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
