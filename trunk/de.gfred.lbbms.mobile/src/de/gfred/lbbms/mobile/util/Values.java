@@ -4,7 +4,8 @@ public interface Values {
     String CUSTOMER_EMAIL = "customerEmail";
     String CUSTOMER_PASSWORD = "customerPassword";
     String SERVER_URI = "http://10.0.2.2:41584/de.gfred.lbbms.service";
-    String CUSTOMER_URI = "http://10.0.2.2:41584/de.gfred.lbbms.service/customer/1/location";
+    // String CUSTOMER_URI = "http://10.0.2.2:41584/de.gfred.lbbms.service/customer/1/location";
+    String CUSTOMER_URI = "http://lbbms.dyndns.org:34900/de.gfred.lbbms.service/customer/1/location";
 
     String HEADER_ACCEPT = "accept";
     String HEADER_TYPE = "content-type";
