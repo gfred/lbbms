@@ -1,6 +1,16 @@
 package de.gfred.lbbms.mobile;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -14,11 +24,14 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import de.gfred.lbbms.mobile.services.ILocationService;
+import de.gfred.lbbms.mobile.services.IgnoreSelfCertificatesSocketFactory;
+import de.gfred.lbbms.mobile.util.Converter;
 import de.gfred.lbbms.mobile.util.Values;
 
 /**
@@ -35,6 +48,7 @@ public class LocationBasedMessaging extends Activity {
 
     private EditText emailText;
     private EditText passwordText;
+    private EditText messageText;
     private Button saveButton;
     private SharedPreferences preferences;
 
@@ -68,6 +82,7 @@ public class LocationBasedMessaging extends Activity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         emailText = (EditText) findViewById(R.id.emailText);
         passwordText = (EditText) findViewById(R.id.passwordText);
+        messageText = (EditText) findViewById(R.id.messageText);
         saveButton = (Button) findViewById(R.id.SaveButton);
 
         email = preferences.getString(Values.CUSTOMER_EMAIL, null);
@@ -133,6 +148,29 @@ public class LocationBasedMessaging extends Activity {
                 isServiceBind = false;
             }
 
+        }
+    }
+
+    public void onClickSendMessage(View view) {
+        if (messageText != null && messageText.getText().toString().trim().length() > 0) {
+            HttpClient client = new DefaultHttpClient();
+            client.getConnectionManager().getSchemeRegistry()
+                    .register(new Scheme("https", new IgnoreSelfCertificatesSocketFactory(), Values.SCHEME_PORT));
+
+            try {
+                HttpPost post = new HttpPost(Values.CUSTOMER_URI);
+                post.setEntity(new StringEntity(Converter.createMSGJsonObject(messageText.getText().toString())
+                        .toString()));
+                post.addHeader(Values.HEADER_TYPE, Values.MIME_TYPE_JSON);
+                HttpResponse response = client.execute(post);
+                Log.d(TAG, "Send Message = Statuscode: " + response.getStatusLine().getStatusCode());
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

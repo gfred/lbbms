@@ -22,7 +22,6 @@ import de.gfred.lbbms.mobile.util.Values;
 public class UpdateLocationService extends Service {
     private static final String TAG = "de.gfred.lbbms.mobile.service.UpdateLocationService";
     private static final boolean DEBUG = true;
-    private static final int SCHEME_PORT = 443;
 
     @Override
     public void onCreate() {
@@ -53,7 +52,7 @@ public class UpdateLocationService extends Service {
             try {
                 HttpClient client = new DefaultHttpClient();
                 client.getConnectionManager().getSchemeRegistry()
-                        .register(new Scheme("https", new IgnoreSelfCertificatesSocketFactory(), SCHEME_PORT));
+                        .register(new Scheme("https", new IgnoreSelfCertificatesSocketFactory(), Values.SCHEME_PORT));
 
                 HttpPut put = new HttpPut(Values.CUSTOMER_URI);
                 put.setEntity(new StringEntity(object.toString()));
