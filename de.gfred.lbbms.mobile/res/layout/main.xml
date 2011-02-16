@@ -31,15 +31,32 @@
     <Button
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:text="Start Service"
+	    android:text="Start Position Service"
 	    android:onClick="onClickServiceStart"	
     />
     
     <Button
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:text="Stop Service"
+	    android:text="Stop Position Service"
 	    android:onClick="onClickServiceStop"	
+    />
+    
+	<EditText
+		android:id="@+id/messageText"
+		android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:hint="Message"
+	    android:gravity="top"
+	    android:lines="4"
+	    android:maxLength="140"
+    />
+    
+    <Button
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:text="Send Message"
+	    android:onClick="onClickSendMessage"	
     />
     
 </LinearLayout>
