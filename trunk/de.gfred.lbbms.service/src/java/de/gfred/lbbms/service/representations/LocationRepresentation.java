@@ -28,7 +28,4 @@ public class LocationRepresentation {
     public void setLon(Double lon) {
         this.lon = lon;
     }
-    
-    
-
 }
