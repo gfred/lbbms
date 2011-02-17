@@ -3,17 +3,27 @@ package de.gfred.lbbms.service.representations;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/*XML
+<message>
+    <type><type>
+    <content></content>
+    <receiver></receiver>
+    <location>
+        <lat></lat>
+        <lon></lon>
+    </location>
+</message>
+ */
 /**
  *
  * @author Frederik Goetz
  * @date 2011.02.03
  */
-@XmlRootElement(name="customerListElement")
+@XmlRootElement(name="message")
 public class MessageRepresentation {
     private String type;
     private String content;
     private LocationRepresentation location;
-    private CustomersRepresentation customer;
     private String receiver;
     private Date sendDate;
 
@@ -23,14 +33,6 @@ public class MessageRepresentation {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public CustomersRepresentation getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomersRepresentation customer) {
-        this.customer = customer;
     }
 
     public LocationRepresentation getLocation() {
@@ -64,6 +66,5 @@ public class MessageRepresentation {
     public void setType(String type) {
         this.type = type;
     }
-
-    
+   
 }
