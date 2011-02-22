@@ -119,15 +119,17 @@ public class MessageCrudService implements IMessageCrudServiceLocal {
     }
 
     @Override
-    public Boolean save(final Message message) {
+    public Long save(final Message message) {
         try {
             ut.begin();
-            if (findById(message.getId()) != null) {
+            if (findById(message.getId()) != null) {    
                 em.merge(message);
             } else {
                 em.persist(message);
             }
+            em.flush();
             ut.commit();
+            
         } catch (Exception e) {
             try {
                 ut.rollback();
@@ -138,10 +140,24 @@ public class MessageCrudService implements IMessageCrudServiceLocal {
             } catch (SystemException ex) {
                 Logger.getLogger(CustomerCrudService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
+            return -1l;
         } finally {
         }
-        return true;
+        return message.getId();
     }
+
+    @Override
+    public Collection<Message> findAllByLocationRange(final Double minLatitude, final Double minLongitude,final Double maxLatitude, final Double maxLongitude){
+        try {            
+            TypedQuery<Message> q = em.createNamedQuery(Message.FIND_BY_LOCATION, Message.class)
+                    .setParameter("lon1", minLongitude).setParameter("lon2", maxLongitude)
+                    .setParameter("lat1", minLatitude).setParameter("lat2", maxLatitude);
+            return q.getResultList();
+        } catch (Exception e) {
+        } finally {
+        }
+        return null;
+    }
+
 
 }

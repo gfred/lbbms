@@ -1,8 +1,9 @@
 package de.gfred.lbbms.service.logic.interfaces;
 
+import de.gfred.lbbms.service.model.Message;
 import java.util.List;
 import javax.ejb.Local;
-import javax.jms.Message;
+
 
 /**
  *

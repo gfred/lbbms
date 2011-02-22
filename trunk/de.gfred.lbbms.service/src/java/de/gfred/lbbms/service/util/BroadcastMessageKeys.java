@@ -6,7 +6,7 @@ package de.gfred.lbbms.service.util;
  * @date 2011.02.17
  */
 public interface BroadcastMessageKeys {
-    String SENDER_NAME = "sender-name";
+    String SENDER_NAME = "sendername";
     String LONGITUDE = "longitude";
     String LATITUDE = "latitude";
     String RANGE = "range";

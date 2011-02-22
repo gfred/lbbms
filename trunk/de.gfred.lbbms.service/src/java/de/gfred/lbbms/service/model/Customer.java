@@ -1,7 +1,9 @@
 package de.gfred.lbbms.service.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,6 +65,10 @@ public class Customer implements Serializable {
 
     @OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
     private List<Message> messages;
+
+    @ManyToMany
+    @JoinColumn(name="RECEIVED_MESSAGES")
+    private Set<Message> receivedMessages;
 
     public Long getId() {
         return id;
@@ -118,6 +125,19 @@ public class Customer implements Serializable {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
+
+    public void setReceivedMessages(Set<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
+    }
+
+    public Set<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void addReceivedMessages(Collection<Message> receivedMessages) {
+        this.receivedMessages.addAll(receivedMessages);
+    }
+
 
     @Override
     public int hashCode() {

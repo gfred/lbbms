@@ -3,14 +3,21 @@ package de.gfred.lbbms.service.resources;
 import de.gfred.lbbms.service.logic.interfaces.IMessageAdministrationLocal;
 import de.gfred.lbbms.service.logic.interfaces.ICustomerAdministrationLocal;
 import de.gfred.lbbms.service.model.Customer;
+import de.gfred.lbbms.service.model.Location;
+import de.gfred.lbbms.service.model.Message;
 import de.gfred.lbbms.service.representations.MessageRepresentation;
 import de.gfred.lbbms.service.resources.util.ResourceValues;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -42,5 +49,23 @@ public class MessagesRessource {
 
         //TODO korrekter respone mit location header 
         return Response.status(Response.Status.OK).build();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<MessageRepresentation> getNewMessagesByLocation(@PathParam(ResourceValues.CUSTOMER_ID) final Long id){
+        if(id==null || customerBean.getCustomerById(id)==null){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        Location location = customerBean.getCustomerById(id).getCurrentLocation();
+
+        List<Message> list = messagingBean.receiveBroadcastMessages(id, location.getLongitude(), location.getLatitude());
+        List<MessageRepresentation> messages = new ArrayList<MessageRepresentation>();
+        for(Message msg : list){
+            messages.add(new MessageRepresentation(msg));
+        }
+        
+        return messages;
     }
 }

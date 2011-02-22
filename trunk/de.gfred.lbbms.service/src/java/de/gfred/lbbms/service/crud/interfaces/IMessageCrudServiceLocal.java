@@ -13,7 +13,7 @@ import javax.ejb.Local;
 @Local
 public interface IMessageCrudServiceLocal {
 
-    Boolean save(final Message message);
+    Long save(final Message message);
 
     Boolean delete(final Message message);
 
@@ -24,5 +24,6 @@ public interface IMessageCrudServiceLocal {
     Message findByDate(final Date date);
 
     Message findByType(final String type);
-    
+
+    Collection<Message> findAllByLocationRange(final Double minLatitude, final Double minLongitude,final Double maxLatitude, final Double maxLongitude);
 }
