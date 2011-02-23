@@ -15,6 +15,7 @@ public class TokenRepresentation {
     private static final boolean DEBUG = false;
 
     private String token;
+    private String uri;
 
     public TokenRepresentation() {
     }
@@ -23,8 +24,9 @@ public class TokenRepresentation {
         this.token = token.getToken();
     }
 
-    public TokenRepresentation(String token) {
+    public TokenRepresentation(String token,Long id) {
         this.token = token;
+        uri = "/customer/"+id;
     }
 
     public String getToken() {
@@ -35,5 +37,11 @@ public class TokenRepresentation {
         this.token = token;
     }
 
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
+    public String getUri() {
+        return uri;
+    }
 }
