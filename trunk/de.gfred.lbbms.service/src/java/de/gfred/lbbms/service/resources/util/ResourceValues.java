@@ -7,6 +7,7 @@ package de.gfred.lbbms.service.resources.util;
  */
 public interface ResourceValues {
     String CUSTOMER_ID = "customerId";
-
+    String MESSAGE_ID = "messageId";
     String LOCATION = "location";
+    String TOKEN = "token";
 }

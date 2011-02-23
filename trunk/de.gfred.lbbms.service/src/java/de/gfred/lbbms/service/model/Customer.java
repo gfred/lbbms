@@ -70,6 +70,9 @@ public class Customer implements Serializable {
     @JoinColumn(name="RECEIVED_MESSAGES")
     private Set<Message> receivedMessages;
 
+    @OneToOne(mappedBy="customer", cascade=CascadeType.ALL)
+    private Token token;
+
     public Long getId() {
         return id;
     }
@@ -138,6 +141,13 @@ public class Customer implements Serializable {
         this.receivedMessages.addAll(receivedMessages);
     }
 
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
 
     @Override
     public int hashCode() {

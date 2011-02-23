@@ -19,5 +19,9 @@ public interface IMessageAdministrationLocal {
     void sendTwitterMessage();
     void sendFacebookMessage();
     void sendSMS();
+
+    Message getMessageById(final Long msgId);
+
+    Boolean deleteMessage(Long msgId);
     
 }

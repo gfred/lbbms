@@ -26,6 +26,8 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path(CustomersResource.URI_TEMPLATE)
 public class CustomersResource {
+    private static final String TAG = "de.gfred.lbbms.service.resources.CustomersResource";
+    private static final boolean DEBUG = false;
     public static final String URI_TEMPLATE = "/customer";
 
     @EJB

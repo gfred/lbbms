@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="customerListElement")
 public class CustomersRepresentation {
+    private static final String TAG = "de.gfred.lbbms.service.representations.CustomersRepresentation";
+    private static final boolean DEBUG = false;
 
     private String email;
     private URI customerUri;

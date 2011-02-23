@@ -23,6 +23,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="message")
 public class MessageRepresentation implements Comparable<MessageRepresentation> {
+    private static final String TAG = "de.gfred.lbbms.service.representations.MessageRepresentation";
+    private static final boolean DEBUG = false;
+
+    private Long id;
     private String type;
     private String content;
     private LocationRepresentation location;
@@ -44,7 +48,15 @@ public class MessageRepresentation implements Comparable<MessageRepresentation> 
         sendDate = message.getSendDate();
         sender = message.getCustomer().getName();
         receiver = message.getReceiver();
+        id = message.getId();
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setSender(String sender) {
