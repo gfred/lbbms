@@ -48,7 +48,7 @@ public class LoginRessource {
                 throw new WebApplicationException(Status.NOT_FOUND);
             }
             if(customerBean.verifyCustomer(login.getEmail(), login.getPassword())){
-                return new TokenRepresentation(tokenBean.getToken(login.getEmail(), login.getPassword()));
+                return new TokenRepresentation(tokenBean.getToken(login.getEmail(), login.getPassword()),customerBean.getCustomerByEmail(login.getEmail()).getId());
             }else{
                 throw new WebApplicationException(Status.FORBIDDEN);
             }
