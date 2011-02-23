@@ -7,6 +7,9 @@ import java.util.List;
  * @author Frederik G�tz
  */
 public class LocationCalculator {
+        private static final String TAG = "de.gfred.lbbms.service.util.LocationCalculator";
+        private static final boolean DEBUG = false;
+
         private static final double EARTH_RADIUS = 6371.01;
 
       	private static final double MIN_LAT = Math.toRadians(-90d);  // -PI/2

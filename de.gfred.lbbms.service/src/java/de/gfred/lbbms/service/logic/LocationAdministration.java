@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class LocationAdministration implements ILocationAdministrationLocal {
-    
+    private static final String TAG = "de.gfred.lbbms.service.logic.LocationAdministration";
+    private static final boolean DEBUG = false;
  
 }

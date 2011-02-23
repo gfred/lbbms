@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="location")
 public class LocationRepresentation {
+    private static final String TAG = "de.gfred.lbbms.service.representations.LocationRepresentation";
+    private static final boolean DEBUG = false;
 
     private Double lon;
     private Double lat;

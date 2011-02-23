@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="customerRegister")
 public class RegisterCustomerRepresentation {
+    private static final String TAG = "de.gfred.lbbms.service.representations.RegisterCustomerRepresentation";
+    private static final boolean DEBUG = false;
+
     private String name;
     private String email;
     private String password;

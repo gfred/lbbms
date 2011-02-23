@@ -15,6 +15,8 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class CustomerAdministration implements ICustomerAdministrationLocal {
+    private static final String TAG = "de.gfred.lbbms.service.logic.CustomerAdministration";
+    private static final boolean DEBUG = false;
 
     @EJB
     private ICustomerCrudServiceLocal customerCrud;

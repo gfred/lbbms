@@ -11,6 +11,8 @@ import de.gfred.lbbms.service.representations.SingleCustomerRepresentation;
  * @date 2011.02.03
  */
 public class ResourceUtil {
+    private static final String TAG = "de.gfred.lbbms.service.resources.util.ResourceUtil";
+    private static final boolean DEBUG = false;
 
     public static CustomersRepresentation convertCustomerIntoListItemRepresentation(Customer customer){
         CustomersRepresentation rep = new CustomersRepresentation();

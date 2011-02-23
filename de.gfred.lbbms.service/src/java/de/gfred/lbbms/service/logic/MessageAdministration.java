@@ -6,7 +6,7 @@ import de.gfred.lbbms.service.logic.interfaces.ICustomerAdministrationLocal;
 import de.gfred.lbbms.service.logic.interfaces.ILocationAdministrationLocal;
 import de.gfred.lbbms.service.model.Customer;
 import de.gfred.lbbms.service.model.Location;
-import de.gfred.lbbms.service.util.BroadcastMessageKeys;
+import de.gfred.lbbms.service.model.Message;
 import de.gfred.lbbms.service.util.ConfigurationValues;
 import de.gfred.lbbms.service.util.LocationCalculator;
 import de.gfred.lbbms.service.util.MessageType;
@@ -22,20 +22,11 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
-import javax.jms.TopicPublisher;
-import javax.jms.TopicSession;
-import javax.jms.TopicSubscriber;
+
 
 /**
  *
@@ -44,6 +35,8 @@ import javax.jms.TopicSubscriber;
  */
 @Stateless
 public class MessageAdministration implements IMessageAdministrationLocal {
+    private static final String TAG = "de.gfred.lbbms.service.logic.MessageAdministration";
+    private static final boolean DEBUG = false;
 
     @EJB
     private ICustomerAdministrationLocal customerBean;
@@ -195,6 +188,8 @@ public class MessageAdministration implements IMessageAdministrationLocal {
 //        return messages;
     }
 
+
+
     @Override
     public void sendPrivateMessage() {
         throw new UnsupportedOperationException("Not supported yet!");
@@ -214,4 +209,15 @@ public class MessageAdministration implements IMessageAdministrationLocal {
     public void sendSMS() {
         throw new UnsupportedOperationException("Not supported yet!");
     }
+
+    @Override
+    public Message getMessageById(final Long msgId) {
+        return messageCrudBean.findById(msgId);
+    }
+
+    public Boolean deleteMessage(Long msgId) {
+        return messageCrudBean.delete(messageCrudBean.findById(msgId));
+    }
+
+
 }

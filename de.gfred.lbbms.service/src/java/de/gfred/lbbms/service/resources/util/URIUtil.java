@@ -13,6 +13,8 @@ import javax.ws.rs.core.UriBuilder;
  * @date 2011.02.03
  */
 public class URIUtil {
+    private static final String TAG = "de.gfred.lbbms.service.resources.util.URIUtil";
+    private static final boolean DEBUG = false;
 
     public static URI getCreatedCustomerURI(final Customer customer){
         Map<String, String> uriParameters = new HashMap<String, String>();
